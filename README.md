@@ -51,3 +51,9 @@ TODO:
 	-Use Yaml file (record.yaml), to check instalation steps
 	-Download zip files externaly [remotely from a website.]
 	-Make a Wishlist
+
+Options for installing rubies
+WRVM install
+Ruby (MRI): <version>
+JRuby:J-<version>
+Rubinius: R-<version>
