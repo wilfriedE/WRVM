@@ -1,27 +1,25 @@
-Rubies = {'1.8.7' => {name: 'Ruby 1.8.7',:type => 'mri', :git_branch => '1.8.7-p371', :git_tag => '', :git_path => 'https://github.com/wilfriedE/Ruby.git'},
-		  '1.9.3' => {name: 'Ruby 1.9.3',:type => 'mri', :git_branch => '1.9.3-p484', :git_tag => '', :git_path => 'https://github.com/wilfriedE/Ruby.git'},
-		  '2.0.0' => {name: 'Ruby 2.0.0',:type => 'mri', :git_branch => '2.0.0-p451', :git_tag => '', :git_path => 'https://github.com/wilfriedE/Ruby.git'},
-		  '2.0.0-x64' => {name: 'Ruby 2.0.0-x64',:type => 'mri', :git_branch => '2.0.0-p451', :git_tag => '', :git_path => 'https://github.com/wilfriedE/Ruby.git'},
-		  'J-1.6.x' => {name: 'JRuby 1.6.7',:type => 'jruby', :git_branch => 'jruby-1_6_7', :git_tag => '', :git_path => 'https://github.com/jruby/jruby.git'},
-		  'J-1.7.x' => {name: 'JRuby 1.7.x',:type => 'jruby', :git_branch => 'jruby-1_7', :git_tag => '', :git_path => 'https://github.com/jruby/jruby.git'},
-		  'Rbx-2.2.6' => {name: 'Rubinius 2.2.6',:type => 'rubinius', :git_branch => '', :git_tag => '', :git_path => 'https://github.com/rubinius/rubinius.git'}
-		}
-
 rubi = ARGV[0]
+location = ARGV[1]
+
 def directory_exists?(folder)
-  dir = ARGV[1]
-  puts "#{dir}/#{folder}"
-  File.directory?("#{dir}/#{folder}")
+	location = ARGV[1]
+  puts "#{location}/#{folder}"
+  File.directory?("#{location}/#{folder}")
 end
 
 if directory_exists?(rubi)
-	puts 'Moving current Ruby folder to version folder'
-	puts "Now Moving local copy of #{rubi} to Ruby folder"
+	puts "Setting #{rubi} as default."
+	IO.popen("setx WRVM_RUBY_PATH #{location}/#{rubi}/bin", 'r+') {|f|
+				f.puts("#{rubi} is now set as default.") # you can also use #write
+				f.close_write
+			  	f.read # get the data from the pipe
+	}
 else
-	puts "making folder name #{rubi} in Ruby folder"
-	if Rubies[rubi][:type] == 'mri'
-	puts "Installing #{Rubies[rubi][:name]} from git with only branch"
-	else
-	puts 'Installing #{Rubies["ARGV[0]"][:name]} from git with branch and tag' 
-	end
+	puts "This ruby is not installed"
+	puts "run 'WRVM install <ruby>' to install it"
+	IO.popen("wrvm stop", 'r+') {|f|
+				f.puts("...") # you can also use #write
+				f.close_write
+			  	f.read # get the data from the pipe
+	}
 end

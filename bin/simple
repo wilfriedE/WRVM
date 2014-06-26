@@ -1,0 +1,4 @@
+
+location = '..'
+rubi = 'system'
+`cd #{location}/#{rubi}`

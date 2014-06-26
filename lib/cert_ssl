@@ -1,7 +1,7 @@
 require 'net/http'
- dir = ARGV[0]
+ location = ARGV[0]
 # create a path to the file "C:\WRVM\bin\cacert.pem"
-cacert_file = File.join("#{dir}/bin/cacert.pem")
+cacert_file = File.join("#{location}/cacert.pem")
  
 Net::HTTP.start("curl.haxx.se") do |http|
   resp = http.get("/ca/cacert.pem")
@@ -9,7 +9,7 @@ Net::HTTP.start("curl.haxx.se") do |http|
   if resp.code == "200"
     open(cacert_file, "wb") { |file| file.write(resp.body) }
     puts "\n\nA bundle of certificate authorities has been installed to"
-    puts "#{dir}\\cacert.pem\n"
+    puts "#{location}\\cacert.pem\n"
   else
     abort "\n\n>>>> A cacert.pem bundle could not be downloaded."
   end
