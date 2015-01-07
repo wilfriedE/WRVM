@@ -1,7 +1,7 @@
 WRVM [Windows Ruby Version Management ]
 ====
 
-**NOTE:** At this stage, this is only meant to be used for personal environement setup on Windows. Help us improve it for better user experience. 
+**NOTE:** Just a fun project to make Ruby Environements easily Maneagable on Windows. 
 -------------------------------------------------
 ## Setup
 
